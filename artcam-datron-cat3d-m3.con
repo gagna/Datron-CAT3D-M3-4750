@@ -1,0 +1,97 @@
+;
+; G - Code configuration file 
+;
+; History
+;
+; Who When     What
+; === ======== ========================================
+; TM  13/05/99 Written
+; BEM 20/05/99 Removed line numbers
+; bem 21/03/00 Added DESCRIPTION and FILE_EXTENSION fields
+; jf  21/01/05 Mods made following visit to Datron - Tchange - Tcheck - Arcs
+; jg  10/04/18 Mods for compatibility with old datron cat3d-nc
+;
+DESCRIPTION = "Datron gagna mod - (mm) (*.mcr)"
+;
+FILE_EXTENSION = "mcr"
+;
+UNITS = MM
+;
+; Cariage return - line feed at end of each line
+;
+END_OF_LINE = "[13][10]"
+;
+; Block numbering 
+;
+LINE_NUM_START     = 0
+LINE_NUM_INCREMENT = 10
+LINE_NUM_MAXIMUM   = 999999
+;
+; Set up default formating for variables
+;
+;
+; Line numbering
+FORMAT = [N|@|N|1.0]
+; Spindle Speed
+FORMAT = [S|@|S|1.0]
+; Feed Rate
+FORMAT = [F|#|F|1.1]
+FORMAT = [FC|#||1.1|0.001]
+FORMAT = [FP|#||1.1|0.001]
+; Tool moves in x,y and z
+FORMAT = [X|@||1.3]
+FORMAT = [Y|@||1.3]
+FORMAT = [Z|@||1.3]
+; Home tool positions 
+FORMAT = [XH|@||1.3]
+FORMAT = [YH|@||1.3]
+FORMAT = [ZH|@||1.3]
+FORMAT = [AH|@||1.3]
+;
+;
+; Set up program header
+;
+START = "!FILE CREATED BY ARTCAM!"
+START = "!POSTPROCESSOR Datron gagna mod!"
+START = "![FILENAME]!"
+START = "_sprache 1;"
+START = "Tool [T];"
+START = "Tcheck 1, 0, 0, 0, 0.02, 0;"
+START = "Feed [FC],[FP],[FC],[FP];"
+START = "!Toolpath:- [COMMENT]!"
+START = "Axis 1, 0, 0, 0, 6, [FC];"
+START = "Ixyz 1, [AH], 0, 0, 0, 0;"
+START = "Axis 0, 0, 0, 0, 6, [FC];"
+;
+; Program moves
+;
+RAPID_RATE_MOVE        = "Axyz 1,[X],[Y],[Z],0,0;"
+FIRST_FEED_RATE_MOVE   = "Axyz 0,[X],[Y],[Z],0,0;"
+FEED_RATE_MOVE         = "Axyz 0,[X],[Y],[Z],0,0;"
+;
+;
+;
+TOOLCHANGE = "Tool [T];"
+TOOLCHANGE = "Tcheck 1, 0, 0, 0, 0.02, 0;"
+TOOLCHANGE = "Feed [FC].,[FP].,[FC].,[FP].;"
+TOOLCHANGE = "!Toolpath:- [COMMENT]!"
+;
+;
+;
+; ARCS
+;FIRST_CW_ARC_MOVE      = "_N G02 X[X] Y[Y] I[I] J[J] [F]"
+;CW_ARC_MOVE            = "_N G02 X[X] Y[Y] I[I] J[J]"
+;
+;FIRST_CCW_ARC_MOVE     = "_N G03 X[X] Y[Y] I[I] J[J] [F]"
+;CCW_ARC_MOVE           = "_N G03 X[X] Y[Y] I[I] J[J]"
+;
+;
+; End of file
+;
+;ND = "G0[ZH]"
+;ND = "G0X0Y0"
+END = "Axis 1, 0, 0, 0, 6, [FC];"
+END = "Ixyz 1, -[AH], 0, 0, 0, 0;"
+END = "Axis 0, 0, 0, 0, 6, [FC];"
+;END = "!M9;"
+;END = "%"
